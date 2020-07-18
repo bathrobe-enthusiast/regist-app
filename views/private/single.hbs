@@ -1,0 +1,53 @@
+<div class="vl"></div>
+<div class="container">
+    <nav class="navbar">
+        <div class="container">
+            <nav class="navbar">
+                <div class="container">
+                    <ul class="navbar-list">
+                        <li class="navbar-item">
+                            <a class="navbar-link" style="color: #0FA0CE;" href="/private/single">Single</a>
+                        </li>
+                        <li class="navbar-item">
+                            <a class="navbar-link" href="/private/multiple">Multiple</a>
+                        </li>
+                        <li class="navbar-logout-item u-pull-right">
+                            <a class="navbar-logout" href="/private/logout">Logout</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </nav>
+</div>
+<div class="container">
+    <div class="row" style="margin-top:5%">
+        <div class="four columns offset-by-one column" style="text-align: center">
+            <p>Enter username, email and password of the account to be created below.</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="one-half column" style="text-align: center">
+            <form method="post" action="/private/createsingle">
+                <input name="accname" placeholder="Username" type="text"><br>
+                <input name="accmail" placeholder="Email" type="email"><br>
+                <input name="accpass" placeholder="Password" type="text"><br>
+                <input type="submit">
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="one-half column" style="text-align: center">
+            {{#if flashMsgSuccess}}
+            <p class="flash-msg-success">
+                {{flashMsgSuccess}}
+            </p>
+            {{/if}}
+            {{#if flashMsgError}}
+            <p class="flash-msg-error">
+                {{flashMsgError}}
+            </p>
+            {{/if}}
+        </div>
+    </div>
+</div>

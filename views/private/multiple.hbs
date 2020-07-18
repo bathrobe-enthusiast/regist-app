@@ -1,0 +1,56 @@
+<div class="vl"></div>
+<div class="container">
+    <nav class="navbar">
+        <div class="container">
+            <nav class="navbar">
+                <div class="container">
+                    <ul class="navbar-list">
+                        <li class="navbar-item">
+                            <a class="navbar-link" href="/private/single">Single</a>
+                        </li>
+                        <li class="navbar-item">
+                            <a class="navbar-link" style="color: #0FA0CE;" href="/private/multiple">Multiple</a>
+                        </li>
+                        <li class="navbar-logout-item u-pull-right">
+                            <a class="navbar-logout" href="/private/logout">Logout</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </nav>
+</div>
+<div class="container">
+    <div class="row" style="margin-top: 5%">
+        <div class="four columns offset-by-seven columns">
+            <form action="/private/createmultiple" method="post" enctype="multipart/form-data">
+                <label for="csvfile">Choose a csv file:</label>
+                <input type="file" id="csvfile" name="csvfile" accept=".csv, text/csv, text/comma-separated-values">
+                <br>
+                <br>
+                <p class="info">
+                    The csv file should have no headers, and the columns, from left to right, should be username, email, and password respectively. Each row should contain only one user account.
+                </p>
+                <input class="u-pull-right" type="submit">
+            </form>
+        </div>
+    </div>
+    {{#if flashMsgs}}
+    <div class="row" style="margin-top: 5%">
+        <div class="four columns offset-by-seven columns">
+        <ul class="flash-list">
+            {{#each flashMsgs}}
+                <li class="flash-msg-{{type}}">{{msg}}</li>
+            {{/each}}
+        </ul>
+        </div>
+    </div>
+    {{/if}}
+    {{#if csvstring}}
+    <div class="row">
+        <div class="four columns offset-by-seven columns">
+            <a class="button u-pull-right" href="data:text/csv;base64,{{{csvstring}}}" download="result.csv">Download</a>
+        </div>
+    </div>
+    {{/if}}
+</div>

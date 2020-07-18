@@ -1,0 +1,23 @@
+<div class="container">
+    <form method="post" action="/login">
+    <div class="row" style="margin-top:20%">
+        <div class="one-third column offset-by-one-third column">
+            <input class="u-full-width" name="username" type="text" placeholder="Username" id="username">
+        </div>
+    </div>
+    <div class="row">
+        <div class="one-third column offset-by-one-third column">
+            <input class="u-full-width" name="password" type="password" placeholder="Password" id="password">
+        </div>
+    </div>
+    <div class="row">
+        <div class="one-third column offset-by-one-third column">
+            <input class="u-full-width" type="submit">
+        </div>
+    </div>
+    <div class="row" style="text-align:center">
+        <div class="one-third column offset-by-one-third column">
+            <p class="flash-msg">{{flashMsg}}</p>
+        </div>
+    </div>
+</div>
