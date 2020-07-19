@@ -83,7 +83,7 @@ router.post('/createmultiple', upload.single('csvfile'), async function(req, res
             
             // validation
             if (data.length !== 3) {
-                req.flash("info", JSON.stringify({ type: "error", msg: data.join(", ") + " may have missing fields." }));
+                req.flash("info", JSON.stringify({ type: "error", msg: data.join(", ") + " may have the wrong number of fields." }));
                 fileRows2.push([...data,"failed"])
             } else {
                 let accname = data[0];
