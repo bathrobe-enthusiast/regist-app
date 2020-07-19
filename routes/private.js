@@ -72,12 +72,19 @@ router.get('/multiple', async function(req, res, next) {
 
 router.post('/createmultiple', upload.single('csvfile'), async function(req, res, next) {
     const fileRows = [];
+    const fileRows2 = [];
     csv.parseFile(req.file.path)
         .on("data", async function(data) {
+            fileRows.push(data)
+        })
+        .on("end", async function() {
+
+        for await (let data of fileRows) {
+            
             // validation
             if (data.length !== 3) {
                 req.flash("info", JSON.stringify({ type: "error", msg: data.join(", ") + " may have missing fields." }));
-                fileRows.push([...data,"failed"])
+                fileRows2.push([...data,"failed"])
             } else {
                 let accname = data[0];
                 let accmail = data[1];
@@ -85,29 +92,28 @@ router.post('/createmultiple', upload.single('csvfile'), async function(req, res
 
                 if (accname.length < 3) {
                     req.flash("info", JSON.stringify({ type: "error", msg: data.join(", ") + " Username cannot be less than three letters." }));
-                    fileRows.push([...data,"failed"])
+                    fileRows2.push([...data,"failed"])
                 } else if (!accmail.includes("@")) {
                     req.flash("info", JSON.stringify({ type: "error", msg: data.join(", ") + " Password cannot be less than five letters."}));
-                    fileRows.push([...data,"failed"])
+                    fileRows2.push([...data,"failed"])
                 } else if (accpass.length < 5) {
                     req.flash("info", JSON.stringify({ type: "error", msg: data.join(", ") + " Email does not look like an email."}));
-                    fileRows.push([...data,"failed"])
+                    fileRows2.push([...data,"failed"])
                 } else {
                     let result = await regist.makeUserAcc(accname, accmail, accpass);
                     if (result[0]) {
-                        req.flash("info", JSON.stringify({ type: "success", msg: data.join(", ") + result[1] }));
-                        fileRows.push([...data, "success"])
+                        req.flash("info", JSON.stringify({ type: "success", msg: data.join(", ") + " " + result[1] }));
+                        fileRows2.push([...data, "success"])
                     } else {
-                        req.flash("info", JSON.stringify({ type: "error", msg: data.join(", ") + result[1] }));
-                        fileRows.push([...data,"failed"])
+                        req.flash("info", JSON.stringify({ type: "error", msg: data.join(", ") + " " + result[1] }));
+                        fileRows2.push([...data,"failed"])
                     }
                 }
             }
-        })
-        .on("end", async function() {
+        }
             fs.unlinkSync(req.file.path);
 
-            const csvdata = await csv.writeToString(fileRows, {
+            const csvdata = await csv.writeToString(fileRows2, {
                 rowDelimiter: '\r\n',
                 includeEndRowDelimiter: true });
 
